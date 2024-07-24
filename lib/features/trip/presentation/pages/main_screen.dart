@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:travel_app/features/trip/presentation/pages/add_trip_screen.dart';
+import 'package:travel_app/features/trip/presentation/pages/my_trips_screen.dart';
+import 'package:travel_app/features/trip/presentation/providers/trip_provider.dart';
 
 class MainScreen extends ConsumerWidget {
   MainScreen({super.key});
@@ -9,6 +12,7 @@ class MainScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(tripListNotifierProvider.notifier).loadTrips();
     _pageController.addListener(() {
       _currentPage.value = _pageController.page!.round();
     });
@@ -23,16 +27,17 @@ class MainScreen extends ConsumerWidget {
             Text(
               'Hi, Shubhank 👋🏻',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),
+            SizedBox(height: 10),
             Text(
               'Travelling Today?',
               style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
                 color: Colors.white,
               ),
             ),
@@ -42,8 +47,8 @@ class MainScreen extends ConsumerWidget {
       body: PageView(
         controller: _pageController,
         children: const [
-          Text('1'),
-          Text('2'),
+          MyTripsScreen(),
+          AddTripScreen(),
           Text('3'),
         ],
       ),
