@@ -74,6 +74,7 @@ class TravelCard extends StatelessWidget {
                         children: [
                           Text(
                             title,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: width > 700 ? 20 : 18,
                               fontWeight: FontWeight.bold,
@@ -131,19 +132,43 @@ class TravelCard extends StatelessWidget {
   }
 
   void showAlertDialog(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog.adaptive(
-          title: Text(title),
-          content: Column(
+        return AlertDialog(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.network(
-                imgUrl,
-                fit: BoxFit.cover,
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: width > 500 ? 22 : 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              Text(desc),
+              Text(
+                location,
+                style: TextStyle(fontSize: width > 500 ? 18 : 14),
+              ),
             ],
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Center(
+                  child: SizedBox(
+                    width: 800,
+                    child: Image.network(
+                      imgUrl,
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
+                ),
+                Text(desc),
+              ],
+            ),
           ),
         );
       },
